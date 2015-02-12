@@ -11,7 +11,7 @@ var RecipeCollection = Backbone.Collection.extend({
 var locate = Backbone.View.extend( {
   tagName: 'button',
   events: {
-    'click': 'findMe'
+    'click': ''
   },
 
   getData: function(e) {
@@ -44,7 +44,7 @@ var myRouter = Backbone.Router.extend({
   },
 
   initialize: function(){
-      this.recipes = new RecipeCollection([{body: 'First Recipe'}]);
+      this.recipes = new RecipeCollection([{body: 'Dustin'}]);
       this.inputView = new locate({collection: this.recipes});
       this.listView = new RecipeListView({collection: this.recipes});
     },
@@ -81,7 +81,15 @@ var data;
 //      $(location).append(renderedTemplate);
 // }
 
+function get_location() {
+  if (Modernizr.geolocation) {
+    navigator.geolocation.getCurrentPosition(show_map);
+  } else {
+    // no native support; maybe try a fallback?
+  }
+}
 
+console.log(get_location());
 
 $.getJSON(url + apiKey + "/" + latitude + "," + longitude + "?callback=?", function(data) {
              console.log(data);
