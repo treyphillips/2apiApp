@@ -117,11 +117,11 @@ var data;
 
 
 
-// $.getJSON(url + apiKey + "/" + lat + "," + long + "?callback=?", function(data) {
-//   console.log(data);
-//   //  $('#weather').html('and the temperature is: ' + data.currently.temperature);
-//
-// });
+$.getJSON(url + apiKey + "/" + 34.87602214390015 + "," + -82.01639059591864 + "?callback=?", function(data) {
+  console.log(data);
+  //  $('#weather').html('and the temperature is: ' + data.currently.temperature);
+
+});
 
 $(document).ready(function() {
   var router = new myRouter();

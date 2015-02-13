@@ -16,7 +16,7 @@ $.ajax({
 
 
       //  function getRecipeJson() {
-      //          var apiKey = "your-api-key-here";
+      //          var apiKey = "dvxCYw0iSP0hRgcV6CP5S1O0j3Qs5G35";
       //          var titleKeyword = "lasagna";
       //          var url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
       //                    + titleKeyword
