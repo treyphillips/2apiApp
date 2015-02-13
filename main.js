@@ -18,12 +18,6 @@ var locate = Backbone.View.extend({
     'click': 'getData'
   },
 
-  // findMe: function(e) {
-  //   e.preventDefault();
-  //   if (Modernizr.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(show_map);
-  //   }
-  // },
 
   getData: function(e) {
     e.preventDefault();
@@ -68,28 +62,13 @@ var myRouter = Backbone.Router.extend({
     });
 
     this.checkGeoSupport();
-    // this.findLocation();
-  },
 
-  // geoSuccess: function(position) {
-  //   var lat = position.coords.latitude;
-  //   var long = position.coords.longitude;
-  //
-  //   console.log('position is lat ' + lat + 'and long ' + long);
-  // },
-  //
-  // geoError: function() {
-  //   console.log('Your location could not be determined');
-  // },
-  //
-  // findLocation: function() {
-  //   navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-  // },
+  },
 
   checkGeoSupport: function() {
     if (Modernizr.geolocation) {
       console.log('you have geolocation enabled');
-      // this.findLocation();
+
     } else {
       console.log('does not support geolocation');
     }
@@ -100,9 +79,6 @@ var myRouter = Backbone.Router.extend({
     $('.app-container').append(this.inputView.el);
     this.listView.render();
     $('.app-container').append(this.listView.el);
-    // var template = _.template($('#home').text());
-    // var renderedTemplate = template("weather");
-    // $('.app-container').html(renderedTemplate);
   },
 
   results: function() {

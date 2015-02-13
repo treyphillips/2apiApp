@@ -1,6 +1,9 @@
+var lat;
+var long;
+
 function geoSuccess(position) {
-  var lat = position.coords.latitude;
-  var long = position.coords.longitude;
+  var lat = navigator.geolocation.position.coords.latitude;
+  var long = navigator.geolocation.position.coords.longitude;
 
   console.log('position is lat ' + lat + 'and long ' + long);
 }
@@ -12,3 +15,5 @@ function geoError() {
 function findLocation() {
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
 }
+
+// navigator.geolocation.getCurrentPosition(geoSuccess);
