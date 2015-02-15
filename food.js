@@ -2,14 +2,14 @@ var temp = 73;
 
 var getFood = function() {
 
-  if (temp < 30) {console.log("chicken stew");}
+  if (temp < 30) {return "chicken+stew";}
 
    else
-    if (temp < 50) {console.log("meatloaf");}
+    if (temp < 50) {return "meatloaf";}
 
     else
-      if (temp < 80) {console.log("cob salad");}
+      if (temp < 80) {return "cob+salad";}
 
      else
-      if (temp < 150){console.log('ice cream');}
+      if (temp < 150){return 'ice+cream';}
     };

@@ -1,27 +1,81 @@
 var lat;
 var long;
+var $appContainer = $('.app-container'),
+  $defaultState = $('[data-template-name="user-input"]').text(),
+  $loadedState = $('[data-template-name="weathTemplate"]').text(),
+  $weatherOverlay = $('[data-template-name="weather-overlay"]').text();
+// var Recipe = Backbone.Model.extend({
+//   defaults: {
+//     body: ""
+//   }
+// });
+
+///weather model///
+window.weather = Backbone.Model.extend({
+  url: "urlWeath",
+  defaults: {
+    "temperature": "",
+    "summary": ""
+  }
+});
+
+window.WeathCollection = Backbone.Collection.extend({
+  model: weather,
+  urlRoot: "urlWeath"
+});
+
+///weather view///
+window.WeathView = Backbone.View.extend({
+  tagName: 'ul',
+
+  initialize: function() {
+    this.model.bind('reset', this.render, this);
+    var self = this;
+    this.model.bind('add', function(weather) {
+      $(self.el).append(new WeathItemView({
+        model: weather
+      }).render().el);
+    }, this);
+    return this;
+  }
+});
+
+window.WeathItemView = Backbone.View.extend({
+  tagname:
+  'li',
+  template: _.template($('weathTemplate').html()),
+
+  initialize:function () {
+    this.model.bind("change", this.render, this);
+    this.model.bind("destroy", this.close, this);
+  }
+});
+
 
 
 var Recipe = Backbone.Model.extend({
+  urlRoot: 'urlFood',
   defaults: {
-    body: ""
+    "title": "",
+    "summary": "",
   }
 });
 
 var RecipeCollection = Backbone.Collection.extend({
-  model: Recipe
+  model: Recipe,
+  url: '/results'
 });
 
 var locate = Backbone.View.extend({
   tagName: 'button',
   events: {
-    'click': 'getData'
+    'click': 'results'
   },
 
 
-  getData: function(e) {
+  results: function(e) {
     e.preventDefault();
-    console.log('found');
+
   },
 
   template: _.template($('#results').text()),
@@ -52,9 +106,9 @@ var myRouter = Backbone.Router.extend({
 
   initialize: function() {
     this.recipes = new RecipeCollection([{
-      body: 'Dustin'
+      body: ''
     }]);
-    this.inputView = new locate({
+    this.resultsView = new locate({
       collection: this.recipes
     });
     this.listView = new RecipeListView({
@@ -75,13 +129,16 @@ var myRouter = Backbone.Router.extend({
   },
 
   index: function() {
-    this.inputView.render();
-    $('.app-container').append(this.inputView.el);
-    this.listView.render();
-    $('.app-container').append(this.listView.el);
+    this.resultsView.render();
+    $('.app-container').append(this.resultsView.el);
+    this.resultsView.render();
+    $('.app-container').append(this.resultsView.el);
   },
 
   results: function() {
+    this.resultsView.render();
+    $('.weathTemplate').append(this.resultsView.el);
+
     // var template = _.template($('#results').text());
     // var renderedTemplate = template('results');
     // $('.app-container').html(renderedTemplate);
@@ -89,11 +146,7 @@ var myRouter = Backbone.Router.extend({
 
 });
 
-var apiKey = '74c54da7ef0fb40fc96cc8d8f8fd6765';
-var url = 'https://api.forecast.io/forecast/';
-// var latitude = 34.8444;
-// var longitude = -82.3856;
-var data;
+
 
 // function renderTemplate(templateId, location, model) {
 //   var templateString = $(templateId).text();
@@ -117,11 +170,7 @@ var data;
 
 
 
-$.getJSON(url + apiKey + "/" + 34.87602214390015 + "," + -82.01639059591864 + "?callback=?", function(data) {
-  console.log(data);
-  //  $('#weather').html('and the temperature is: ' + data.currently.temperature);
 
-});
 
 $(document).ready(function() {
   var router = new myRouter();
